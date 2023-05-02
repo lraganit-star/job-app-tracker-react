@@ -2,16 +2,23 @@
   padding: 20px;
   color: blue;
   border: 2px solid black;
-  height: 250px;
+  height: 225px;
   width: 200px;
 }
 
 input {
-  margin: 10px;
+  flex: auto;
+  width: 100px;
 }
 
 form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+label{
+  display: flex;
+  padding: 10px;
+  align-items: center;
 }

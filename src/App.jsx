@@ -8,6 +8,7 @@ function BuildForm({ id, placeholder }) {
       {placeholder}
       <input
         type="text"
+        className="form"
         id={id}
         name={id}
         placeholder={placeholder}
@@ -18,6 +19,9 @@ function BuildForm({ id, placeholder }) {
   return [value, input];
 }
 
+// I need to move the value use state up to this function
+//
+// change the div className to id where the name is the companyName value
 export default function Card() {
   return (
     <>
