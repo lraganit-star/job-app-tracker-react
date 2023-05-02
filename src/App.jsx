@@ -1,35 +1,41 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+export default function Card() {
+  // const [companyName, setCompanyName] = useState("");
+  // const [jobTitle, setJobTitle] = useState("");
+  // const [location, setLocation] = useState("");
+  // const [link, setLink] = useState("");
+
+  // return (
+  //   <div className="card">
+  //     <form>
+  //       <input id="company_name" type="text" placeholder="Company Name" />
+  //       <input id="job_title" type="text" placeholder="Job Title" />
+  //       <input id="location" type="text" placeholder="Location" />
+  //       <input id="link" type="text" placeholder="Link to job description" />
+  //     </form>
+  //   </div>
+
+  const [username, userInput] = useInput({ type: "text" });
+  const [password, passwordInput] = useInput({ type: "text" });
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>HI MOM</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {userInput} : {username} <br />
+      {passwordInput} : {password}
     </>
   );
 }
 
-export default App;
+function useInput({ type /*...*/ }) {
+  const [value, setValue] = useState("");
+  const input = (
+    <input
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      type={type}
+    />
+  );
+  return [value, input];
+}
