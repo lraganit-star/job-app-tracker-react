@@ -21,8 +21,10 @@ function BuildForm({ id, placeholder }) {
 
 // need to add functionality to button
 export default function Page() {
+  const [addCard, setAddCard] = useState([]);
+
   function handleClick() {
-    // Card();
+    setAddCard((prevCards) => [...prevCards, { id: Date.now() }]);
   }
 
   return (
@@ -33,41 +35,35 @@ export default function Page() {
           +
         </button>
       </div>
-      <SectionHeaders></SectionHeaders>
+      <Sections cards={addCard} />
     </>
   );
 }
 
-function SectionHeaders() {
+function Sections({ cards }) {
   return (
     <>
-      <div id="sectionHeaders">
-        <div className="sectionHeader applied">
-          Applied
-          <div className="section applied"></div>
+      <div className="sections">
+        <div id="sectionHeaders">
+          <div className="sectionHeader applied">Applied</div>
+          <div className="sectionHeader phone_screen">Phone Screen</div>
+          <div className="sectionHeader technical">Technical Interview</div>
+          <div className="sectionHeader take_home">Take Home</div>
+          <div className="sectionHeader panel">Panel Interview</div>
+          <div className="sectionHeader offer">Job Offer</div>
+          <div className="sectionHeader rejected">Rejected</div>
         </div>
-        <div className="sectionHeader phone_screen">
-          Phone Screen
+        <div className="sectionContent">
+          <div className="section applied">
+            {cards.map((card) => (
+              <Card key={card.id} />
+            ))}
+          </div>
           <div className="section phone_screen"></div>
-        </div>
-        <div className="sectionHeader technical">
-          Technical Interview
           <div className="section technical"></div>
-        </div>
-        <div className="sectionHeader take_home">
-          Take Home
           <div className="section take_home"></div>
-        </div>
-        <div className="sectionHeader panel">
-          Panel Interview
           <div className="section panel"></div>
-        </div>
-        <div className="sectionHeader offer">
-          Job Offer
           <div className="section offer"></div>
-        </div>
-        <div className="sectionHeader rejected">
-          Rejected
           <div className="section rejected"></div>
         </div>
       </div>
@@ -109,7 +105,7 @@ function Card() {
   return (
     <>
       <form>
-        <div className={`card ${compname}`}>
+        <div className={compname} id="card">
           {compnameInput}
           {jobtitleInput}
           {locationInput}
