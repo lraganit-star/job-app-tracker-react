@@ -29,28 +29,6 @@ label{
   align-items: center;
 }
 
-.sections {
-  display: flex;
-  flex-direction: column;
-
-  font-size: 24px;
-}
-
-.sectionHeaders {
-  padding: 10px;
-  color: #355070;
-
-  display: flex;
-  justify-content: space-evenly;
-  flex-basis: 100%;
-}
-
-.sectionContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
-
 #header {
   padding: 15px;
   border-bottom: solid 2px black;
@@ -62,8 +40,33 @@ label{
   align-items: center;
 }
 
-#add_card {
-  margin-left: auto;
+#sections {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 24px;
+  width: 150%;
+  overflow-x: auto;
+}
+
+#sectionHeaders {
+  display:flex; 
+
+  color: #355070;
+}
+
+.sectionHeader {
+  width: 300px; 
+
+  display: flex; 
+  justify-content: space-evenly;
+  flex: 0 0 300px;
+}
+
+#sectionContent {
+  display: flex;
+  justify-content: flex-start;
+  flex: 0 0 300px;
 }
 
 button {
@@ -74,16 +77,13 @@ button {
   color: #b56576;
 }
 
-.section {
-  height: 50px;
-  width: 50px;
+.content {
+  width: 300px;
+  height: 100vh;
   margin-top: 10px;
 
   display: flex;
-}
-
-.section.applied {
-  width: 500px;
-  height: 500px;
-  border: 2px solid black;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 300px;
 }

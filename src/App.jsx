@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React, { Component } from "react";
 import "./App.css";
 
 function BuildForm({ id, placeholder }) {
@@ -19,7 +20,6 @@ function BuildForm({ id, placeholder }) {
   return [value, input];
 }
 
-// need to add functionality to button
 export default function Page() {
   const [addCard, setAddCard] = useState([]);
 
@@ -43,7 +43,7 @@ export default function Page() {
 function Sections({ cards }) {
   return (
     <>
-      <div className="sections">
+      <div id="sections">
         <div id="sectionHeaders">
           <div className="sectionHeader applied">Applied</div>
           <div className="sectionHeader phone_screen">Phone Screen</div>
@@ -53,18 +53,18 @@ function Sections({ cards }) {
           <div className="sectionHeader offer">Job Offer</div>
           <div className="sectionHeader rejected">Rejected</div>
         </div>
-        <div className="sectionContent">
-          <div className="section applied">
+        <div id="sectionContent">
+          <div className="content applied">
             {cards.map((card) => (
               <Card key={card.id} />
             ))}
           </div>
-          <div className="section phone_screen"></div>
-          <div className="section technical"></div>
-          <div className="section take_home"></div>
-          <div className="section panel"></div>
-          <div className="section offer"></div>
-          <div className="section rejected"></div>
+          <div className="content phone_screen"></div>
+          <div className="content technical"></div>
+          <div className="content take_home"></div>
+          <div className="content panel"></div>
+          <div className="content offer"></div>
+          <div className="content rejected"></div>
         </div>
       </div>
     </>
