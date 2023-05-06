@@ -13,16 +13,6 @@ form {
   align-items: flex-start;
 }
 
-#card {
-  padding: 10px;
-  color: #355070;
-  border: 2px solid #6d597a;
-  margin: 10px;
-  height: 225px;
-  width: 200px;
-  font-size: 14px;
-}
-
 label{
   display: flex;
   padding: 10px;
@@ -88,4 +78,14 @@ button {
   flex-direction: column;
   align-items: center;
   flex: 0 0 300px;
+}
+
+.card {
+  padding: 10px;
+  color: #355070;
+  border: 2px solid #6d597a;
+  margin: 10px;
+  height: 225px;
+  width: 200px;
+  font-size: 14px;
 }

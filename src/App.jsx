@@ -1,11 +1,22 @@
-import { useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDrag } from "react-dnd";
+import { useState, useEffect } from "react";
+// import { DndProvider, useDrag } from "react-dnd";
+// import { HTML5Backend } from "react-dnd-html5-backend";
 import "./App.css";
 
 function BuildForm({ id, placeholder }) {
   const [value, setValue] = useState("");
+
+  const handleInputBlur = () => {
+    localStorage.setItem("savedInput", value);
+  };
+
+  useEffect(() => {
+    const savedValue = localStorage.getItem("savedInput");
+    if (savedValue) {
+      setValue(savedValue);
+    }
+  }, []);
+
   const input = (
     <label key={id}>
       {placeholder}
@@ -14,8 +25,10 @@ function BuildForm({ id, placeholder }) {
         className="form"
         id={id}
         name={id}
+        value={value}
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
+        onBlur={handleInputBlur}
       />
     </label>
   );
@@ -63,6 +76,7 @@ function Sections({ cards }) {
             ))}
             {/* <DraggableCard></DraggableCard> */}
           </div>
+          <Card></Card>
           <div className="content phone_screen"></div>
           <div className="content technical"></div>
           <div className="content take_home"></div>
@@ -78,40 +92,23 @@ function Sections({ cards }) {
   );
 }
 
-function DndContext() {
-  return <DndProvider backend={HTML5Backend}></DndProvider>;
-}
+// const DropZone = ({ onItemDropped }) => {
+//   const [{ isOver }, drop] = useDrop({
+//     accept: "ITEM",
+//     drop: (item) => {
+//       onItemDropped(item);
+//     },
+//     collect: (monitor) => ({
+//       isOver: !!monitor.isOver(),
+//     }),
+//   });
 
-const DraggableCard = ({ id, data }) => {
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: "CARD", id, data },
-    collect: (monitor) => ({ isDragging: !!monitor.isDragging() }),
-  });
-
-  return (
-    <div ref={drag}>
-      <Card></Card>
-    </div>
-  );
-};
-
-const DropZone = ({ onItemDropped }) => {
-  const [{ isOver }, drop] = useDrop({
-    accept: "ITEM",
-    drop: (item) => {
-      onItemDropped(item);
-    },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  });
-
-  return (
-    <div ref={drop}>
-      {isOver ? "Release to drop" : "Drag and drop items here"}
-    </div>
-  );
-};
+//   return (
+//     <div ref={drop}>
+//       {isOver ? "Release to drop" : "Drag and drop items here"}
+//     </div>
+//   );
+// };
 
 function Card() {
   const [compname, setCompname] = useState("");
@@ -147,7 +144,7 @@ function Card() {
   return (
     <>
       <form>
-        <div className={compname} id="card">
+        <div className={compname + "card"} id={Date.now()}>
           {compnameInput}
           {jobtitleInput}
           {locationInput}
