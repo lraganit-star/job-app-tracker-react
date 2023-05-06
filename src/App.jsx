@@ -1,5 +1,7 @@
 import { useState } from "react";
-import React, { Component } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDrag } from "react-dnd";
 import "./App.css";
 
 function BuildForm({ id, placeholder }) {
@@ -43,6 +45,7 @@ export default function Page() {
 function Sections({ cards }) {
   return (
     <>
+      {/* <DndContext> */}
       <div id="sections">
         <div id="sectionHeaders">
           <div className="sectionHeader applied">Applied</div>
@@ -58,6 +61,7 @@ function Sections({ cards }) {
             {cards.map((card) => (
               <Card key={card.id} />
             ))}
+            {/* <DraggableCard></DraggableCard> */}
           </div>
           <div className="content phone_screen"></div>
           <div className="content technical"></div>
@@ -65,11 +69,49 @@ function Sections({ cards }) {
           <div className="content panel"></div>
           <div className="content offer"></div>
           <div className="content rejected"></div>
+          {/* <DropZone id="card-1" data={{ label: "card-1"}}></DropZone>
+          <DropZone id="card-2" data={{ label: "card-2"}}></DraggableCard> */}
         </div>
       </div>
+      {/* </DndContext> */}
     </>
   );
 }
+
+function DndContext() {
+  return <DndProvider backend={HTML5Backend}></DndProvider>;
+}
+
+const DraggableCard = ({ id, data }) => {
+  const [{ isDragging }, drag] = useDrag({
+    item: { type: "CARD", id, data },
+    collect: (monitor) => ({ isDragging: !!monitor.isDragging() }),
+  });
+
+  return (
+    <div ref={drag}>
+      <Card></Card>
+    </div>
+  );
+};
+
+const DropZone = ({ onItemDropped }) => {
+  const [{ isOver }, drop] = useDrop({
+    accept: "ITEM",
+    drop: (item) => {
+      onItemDropped(item);
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  return (
+    <div ref={drop}>
+      {isOver ? "Release to drop" : "Drag and drop items here"}
+    </div>
+  );
+};
 
 function Card() {
   const [compname, setCompname] = useState("");

@@ -53,6 +53,7 @@ label{
   display:flex; 
 
   color: #355070;
+  padding: 15px;
 }
 
 .sectionHeader {
@@ -73,6 +74,7 @@ button {
   background-color: #eaac8b;
   height: 50px;
   width: 50px;
+  margin-left: 20px;
   font-size: 30px;
   color: #b56576;
 }
