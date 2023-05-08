@@ -3,43 +3,33 @@ import { useState, useEffect } from "react";
 // import { HTML5Backend } from "react-dnd-html5-backend";
 import "./App.css";
 
-function BuildForm({ id, placeholder }) {
-  const [value, setValue] = useState("");
-
-  const handleInputBlur = () => {
-    localStorage.setItem("savedInput", value);
-  };
-
-  useEffect(() => {
-    const savedValue = localStorage.getItem("savedInput");
-    if (savedValue) {
-      setValue(savedValue);
-    }
-  }, []);
-
-  const input = (
-    <label key={id}>
-      {placeholder}
-      <input
-        type="text"
-        className="form"
-        id={id}
-        name={id}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => setValue(e.target.value)}
-        onBlur={handleInputBlur}
-      />
-    </label>
-  );
-  return [value, input];
-}
-
 export default function Page() {
   const [addCard, setAddCard] = useState([]);
 
+  useEffect(() => {
+    const savedCards = localStorage.getItem("savedCards");
+    if (savedCards) {
+      setAddCard(JSON.parse(savedCards));
+    }
+  }, []);
+
   function handleClick() {
-    setAddCard((prevCards) => [...prevCards, { id: Date.now() }]);
+    const newCard = { id: Date.now(), compname: "", jobtitle: "", link: "" };
+    setAddCard((prevCards) => {
+      const updatedCards = [...prevCards, newCard];
+      localStorage.setItem("savedCards", JSON.stringify(updatedCards));
+      return updatedCards;
+    });
+  }
+
+  function handleCardChange(id, updatedData) {
+    setAddCard((prevCards) => {
+      const updatedCards = prevCards.map((card) =>
+        card.id === id ? { ...card, ...updatedData } : card
+      );
+      localStorage.setItem("savedCards", JSON.stringify(updatedCards));
+      return updatedCards;
+    });
   }
 
   return (
@@ -50,12 +40,12 @@ export default function Page() {
           +
         </button>
       </div>
-      <Sections cards={addCard} />
+      <Sections cards={addCard} onCardChange={handleCardChange} />
     </>
   );
 }
 
-function Sections({ cards }) {
+function Sections({ cards, onCardChange }) {
   return (
     <>
       {/* <DndContext> */}
@@ -72,11 +62,16 @@ function Sections({ cards }) {
         <div id="sectionContent">
           <div className="content applied">
             {cards.map((card) => (
-              <Card key={card.id} />
+              <Card
+                key={card.id}
+                data={card}
+                onDataChange={(updatedData) =>
+                  onCardChange(card.id, updatedData)
+                }
+              />
             ))}
             {/* <DraggableCard></DraggableCard> */}
           </div>
-          <Card></Card>
           <div className="content phone_screen"></div>
           <div className="content technical"></div>
           <div className="content take_home"></div>
@@ -110,47 +105,72 @@ function Sections({ cards }) {
 //   );
 // };
 
-function Card() {
-  const [compname, setCompname] = useState("");
-  const [jobtitle, setJobtitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [link, setLink] = useState("");
+function Card({ data, onDataChange }) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    onDataChange({ [name]: value });
+  };
 
-  const [compNameVal, compnameInput] = BuildForm({
+  const compNameInput = BuildForm({
     id: "compname",
+    name: "compname",
     placeholder: "Company Name",
-    value: compname,
-    setValue: setCompname,
+    value: data.compname,
+    onChange: handleInputChange,
   });
-  const [jobTitleVal, jobtitleInput] = BuildForm({
+
+  const jobTitleInput = BuildForm({
     id: "jobtitle",
+    name: "jobtitle",
     placeholder: "Job Title",
-    value: jobtitle,
-    setValue: setJobtitle,
+    value: data.jobtitle,
+    onChange: handleInputChange,
   });
-  const [locationVal, locationInput] = BuildForm({
+
+  const locationInput = BuildForm({
     id: "location",
+    name: "location",
     placeholder: "Office Location",
-    value: location,
-    setValue: setLocation,
+    value: data.location,
+    onChange: handleInputChange,
   });
-  const [linkVal, linkInput] = BuildForm({
+
+  const linkInput = BuildForm({
     id: "link",
+    name: "link",
     placeholder: "Application link",
-    value: link,
-    setValue: setLink,
+    value: data.link,
+    onChange: handleInputChange,
   });
 
   return (
     <>
       <form>
-        <div className={compname + "card"} id={Date.now()}>
-          {compnameInput}
-          {jobtitleInput}
+        <div className="card" id={data.id}>
+          {compNameInput}
+          {jobTitleInput}
           {locationInput}
           {linkInput}
         </div>
       </form>
     </>
   );
+}
+
+function BuildForm({ id, name, placeholder, value, onChange }) {
+  const input = (
+    <label key={id}>
+      {placeholder}
+      <input
+        type="text"
+        className="form"
+        id={id}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+      />
+    </label>
+  );
+  return input;
 }
