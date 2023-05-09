@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-// import { DndProvider, useDrag } from "react-dnd";
-// import { HTML5Backend } from "react-dnd-html5-backend";
 import "./App.css";
 
 export default function Page() {
@@ -70,7 +68,6 @@ function Sections({ cards, onCardChange }) {
                 }
               />
             ))}
-            {/* <DraggableCard></DraggableCard> */}
           </div>
           <div className="content phone_screen"></div>
           <div className="content technical"></div>
@@ -78,32 +75,11 @@ function Sections({ cards, onCardChange }) {
           <div className="content panel"></div>
           <div className="content offer"></div>
           <div className="content rejected"></div>
-          {/* <DropZone id="card-1" data={{ label: "card-1"}}></DropZone>
-          <DropZone id="card-2" data={{ label: "card-2"}}></DraggableCard> */}
         </div>
       </div>
-      {/* </DndContext> */}
     </>
   );
 }
-
-// const DropZone = ({ onItemDropped }) => {
-//   const [{ isOver }, drop] = useDrop({
-//     accept: "ITEM",
-//     drop: (item) => {
-//       onItemDropped(item);
-//     },
-//     collect: (monitor) => ({
-//       isOver: !!monitor.isOver(),
-//     }),
-//   });
-
-//   return (
-//     <div ref={drop}>
-//       {isOver ? "Release to drop" : "Drag and drop items here"}
-//     </div>
-//   );
-// };
 
 function Card({ data, onDataChange }) {
   const handleInputChange = (e) => {
