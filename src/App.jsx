@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 export default function Page() {
@@ -44,9 +44,23 @@ export default function Page() {
 }
 
 function Sections({ cards, onCardChange }) {
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+
+    const droppedItemId = e.dataTransfer.getData("text/plain");
+    const droppedItem = document.getElementById(droppedItemId);
+
+    if (droppedItem && e.target.classList.contains("content")) {
+      e.target.appendChild(droppedItem);
+    }
+  };
+
   return (
     <>
-      {/* <DndContext> */}
       <div id="sections">
         <div id="sectionHeaders">
           <div className="sectionHeader applied">Applied</div>
@@ -58,7 +72,11 @@ function Sections({ cards, onCardChange }) {
           <div className="sectionHeader rejected">Rejected</div>
         </div>
         <div id="sectionContent">
-          <div className="content applied">
+          <div
+            className="content applied"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
             {cards.map((card) => (
               <Card
                 key={card.id}
@@ -69,12 +87,36 @@ function Sections({ cards, onCardChange }) {
               />
             ))}
           </div>
-          <div className="content phone_screen"></div>
-          <div className="content technical"></div>
-          <div className="content take_home"></div>
-          <div className="content panel"></div>
-          <div className="content offer"></div>
-          <div className="content rejected"></div>
+          <div
+            className="content phone_screen"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          ></div>
+          <div
+            className="content technical"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          ></div>
+          <div
+            className="content take_home"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          ></div>
+          <div
+            className="content panel"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          ></div>
+          <div
+            className="content offer"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          ></div>
+          <div
+            className="content rejected"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          ></div>
         </div>
       </div>
     </>
@@ -85,6 +127,10 @@ function Card({ data, onDataChange }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onDataChange({ [name]: value });
+  };
+
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("text/plain", e.target.id);
   };
 
   const compNameInput = BuildForm({
@@ -122,7 +168,12 @@ function Card({ data, onDataChange }) {
   return (
     <>
       <form>
-        <div className="card" id={data.id}>
+        <div
+          className="card"
+          id={data.id}
+          draggable={true}
+          onDragStart={handleDragStart}
+        >
           {compNameInput}
           {jobTitleInput}
           {locationInput}
