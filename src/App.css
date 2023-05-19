@@ -71,8 +71,9 @@ button {
 
 .content {
   width: 300px;
-  height: 100vh;
+  min-height: 110vh;
   margin-top: 10px;
+  padding-bottom: 100px;
 
   display: flex;
   flex-direction: column;
