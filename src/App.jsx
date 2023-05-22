@@ -31,8 +31,8 @@ export default function Page() {
   }
 
   const deleteCard = (id) => {
-    const updatedCards = cards.filter((card) => card.id !== id);
-    setAddCards(updatedCards);
+    const updatedCards = addCard.filter((card) => card.id !== id);
+    setAddCard(updatedCards);
   };
 
   return (
@@ -46,7 +46,7 @@ export default function Page() {
       <Sections
         cards={addCard}
         onCardChange={handleCardChange}
-        onDelete={() => deleteCard(card.id)}
+        onDelete={deleteCard}
       />
     </>
   );
@@ -94,6 +94,7 @@ function Sections({ cards, onCardChange, onDelete }) {
                   onCardChange(card.id, updatedData)
                 }
                 onDelete={onDelete}
+                cardId={card.id}
               />
             ))}
           </div>
@@ -139,7 +140,7 @@ function Sections({ cards, onCardChange, onDelete }) {
   );
 }
 
-function Card({ data, onDataChange, onDelete }) {
+function Card({ data, onDataChange, onDelete, cardId }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onDataChange({ [name]: value });
@@ -147,6 +148,11 @@ function Card({ data, onDataChange, onDelete }) {
 
   const handleDragStart = (e) => {
     e.dataTransfer.setData("text/plain", e.target.id);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    onDelete(cardId);
   };
 
   return (
@@ -158,7 +164,7 @@ function Card({ data, onDataChange, onDelete }) {
         onDragStart={handleDragStart}
       >
         <form>
-          <button id="deletecard" onClick={onDelete}>
+          <button id="deletecard" onClick={handleDelete}>
             x
           </button>
           <div>
