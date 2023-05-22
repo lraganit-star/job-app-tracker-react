@@ -30,6 +30,11 @@ export default function Page() {
     });
   }
 
+  const deleteCard = (id) => {
+    const updatedCards = cards.filter((card) => card.id !== id);
+    setAddCards(updatedCards);
+  };
+
   return (
     <>
       <div id="header">
@@ -38,12 +43,16 @@ export default function Page() {
           +
         </button>
       </div>
-      <Sections cards={addCard} onCardChange={handleCardChange} />
+      <Sections
+        cards={addCard}
+        onCardChange={handleCardChange}
+        onDelete={() => deleteCard(card.id)}
+      />
     </>
   );
 }
 
-function Sections({ cards, onCardChange }) {
+function Sections({ cards, onCardChange, onDelete }) {
   const handleDragOver = (e) => {
     e.preventDefault();
   };
@@ -84,6 +93,7 @@ function Sections({ cards, onCardChange }) {
                 onDataChange={(updatedData) =>
                   onCardChange(card.id, updatedData)
                 }
+                onDelete={onDelete}
               />
             ))}
           </div>
@@ -91,31 +101,37 @@ function Sections({ cards, onCardChange }) {
             className="content phone_screen"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            onDelete={onDelete}
           ></div>
           <div
             className="content technical"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            onDelete={onDelete}
           ></div>
           <div
             className="content take_home"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            onDelete={onDelete}
           ></div>
           <div
             className="content panel"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            onDelete={onDelete}
           ></div>
           <div
             className="content offer"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            onDelete={onDelete}
           ></div>
           <div
             className="content rejected"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            onDelete={onDelete}
           ></div>
         </div>
       </div>
@@ -123,7 +139,7 @@ function Sections({ cards, onCardChange }) {
   );
 }
 
-function Card({ data, onDataChange }) {
+function Card({ data, onDataChange, onDelete }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onDataChange({ [name]: value });
@@ -133,53 +149,50 @@ function Card({ data, onDataChange }) {
     e.dataTransfer.setData("text/plain", e.target.id);
   };
 
-  const compNameInput = BuildForm({
-    id: "compname",
-    name: "compname",
-    placeholder: "Company Name",
-    value: data.compname,
-    onChange: handleInputChange,
-  });
-
-  const jobTitleInput = BuildForm({
-    id: "jobtitle",
-    name: "jobtitle",
-    placeholder: "Job Title",
-    value: data.jobtitle,
-    onChange: handleInputChange,
-  });
-
-  const locationInput = BuildForm({
-    id: "location",
-    name: "location",
-    placeholder: "Office Location",
-    value: data.location,
-    onChange: handleInputChange,
-  });
-
-  const linkInput = BuildForm({
-    id: "link",
-    name: "link",
-    placeholder: "Application link",
-    value: data.link,
-    onChange: handleInputChange,
-  });
-
   return (
     <>
-      <form>
-        <div
-          className="card"
-          id={data.id}
-          draggable={true}
-          onDragStart={handleDragStart}
-        >
-          {compNameInput}
-          {jobTitleInput}
-          {locationInput}
-          {linkInput}
-        </div>
-      </form>
+      <div
+        className="card"
+        id={data.id}
+        draggable={true}
+        onDragStart={handleDragStart}
+      >
+        <form>
+          <button id="deletecard" onClick={onDelete}>
+            x
+          </button>
+          <div>
+            <BuildForm
+              id="compname"
+              name="compname"
+              placeholder="Company Name"
+              value={data.compname}
+              onChange={handleInputChange}
+            />
+            <BuildForm
+              id="jobtitle"
+              name="jobtitle"
+              placeholder="Job Title"
+              value={data.jobtitle}
+              onChange={handleInputChange}
+            />
+            <BuildForm
+              id="location"
+              name="location"
+              placeholder="Office Location"
+              value={data.location}
+              onChange={handleInputChange}
+            />
+            <BuildForm
+              id="link"
+              name="link"
+              placeholder="Application Link"
+              value={data.link}
+              onChange={handleInputChange}
+            />
+          </div>
+        </form>
+      </div>
     </>
   );
 }

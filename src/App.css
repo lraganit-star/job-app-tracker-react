@@ -90,3 +90,18 @@ button {
   width: 200px;
   font-size: 14px;
 }
+
+#deletecard {
+  margin-left: auto;
+  height: 17px;
+  width: 17px;
+  background-color: white;
+  border: none;
+  padding: 0px;
+
+  font-size: 17px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
