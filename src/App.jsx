@@ -3,6 +3,7 @@ import "./App.css";
 
 export default function Page() {
   const [addCard, setAddCard] = useState([]);
+  const [cardPlacement, setCardPlacement] = useState([]);
 
   useEffect(() => {
     const savedCards = localStorage.getItem("savedCards");
@@ -12,7 +13,13 @@ export default function Page() {
   }, []);
 
   function handleClick() {
-    const newCard = { id: Date.now(), compname: "", jobtitle: "", link: "" };
+    const newCard = {
+      id: Date.now(),
+      compname: "",
+      jobtitle: "",
+      link: "",
+      sectionType: "applied",
+    };
     setAddCard((prevCards) => {
       const updatedCards = [...prevCards, newCard];
       localStorage.setItem("savedCards", JSON.stringify(updatedCards));
@@ -26,6 +33,7 @@ export default function Page() {
         card.id === id ? { ...card, ...updatedData } : card
       );
       localStorage.setItem("savedCards", JSON.stringify(updatedCards));
+      console.log("updatedCards", updatedCards);
       return updatedCards;
     });
   }
@@ -60,11 +68,18 @@ function Sections({ cards, onCardChange, onDelete }) {
   const handleDrop = (e) => {
     e.preventDefault();
 
+    const droppedSection = e.target;
+
     const droppedItemId = e.dataTransfer.getData("text/plain");
     const droppedItem = document.getElementById(droppedItemId);
 
     if (droppedItem && e.target.classList.contains("content")) {
-      e.target.appendChild(droppedItem);
+      droppedSection.appendChild(droppedItem);
+
+      const newSection = droppedSection.classList[1];
+      const cardId = Number.parseInt(droppedItemId);
+
+      onCardChange(cardId, { sectionType: newSection });
     }
   };
 
@@ -89,7 +104,7 @@ function Sections({ cards, onCardChange, onDelete }) {
             {cards.map((card) => (
               <Card
                 key={card.id}
-                data={card}
+                cardData={card}
                 onDataChange={(updatedData) =>
                   onCardChange(card.id, updatedData)
                 }
@@ -140,7 +155,7 @@ function Sections({ cards, onCardChange, onDelete }) {
   );
 }
 
-function Card({ data, onDataChange, onDelete, cardId }) {
+function Card({ cardData, onDataChange, onDelete, cardId }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onDataChange({ [name]: value });
@@ -159,7 +174,7 @@ function Card({ data, onDataChange, onDelete, cardId }) {
     <>
       <div
         className="card"
-        id={data.id}
+        id={cardData.id}
         draggable={true}
         onDragStart={handleDragStart}
       >
@@ -169,31 +184,31 @@ function Card({ data, onDataChange, onDelete, cardId }) {
           </button>
           <div>
             <BuildForm
-              id="compname"
+              formid="compname"
               name="compname"
               placeholder="Company Name"
-              value={data.compname}
+              value={cardData.compname}
               onChange={handleInputChange}
             />
             <BuildForm
-              id="jobtitle"
+              formid="jobtitle"
               name="jobtitle"
               placeholder="Job Title"
-              value={data.jobtitle}
+              value={cardData.jobtitle}
               onChange={handleInputChange}
             />
             <BuildForm
-              id="location"
+              formid="location"
               name="location"
               placeholder="Office Location"
-              value={data.location}
+              value={cardData.location}
               onChange={handleInputChange}
             />
             <BuildForm
-              id="link"
+              formid="link"
               name="link"
               placeholder="Application Link"
-              value={data.link}
+              value={cardData.link}
               onChange={handleInputChange}
             />
           </div>
@@ -203,14 +218,14 @@ function Card({ data, onDataChange, onDelete, cardId }) {
   );
 }
 
-function BuildForm({ id, name, placeholder, value, onChange }) {
+function BuildForm({ formid, name, placeholder, value, onChange }) {
   const input = (
-    <label key={id}>
+    <label key={formid}>
       {placeholder}
       <input
         type="text"
         className="form"
-        id={id}
+        id={formid}
         name={name}
         value={value}
         placeholder={placeholder}
