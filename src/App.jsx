@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 export default function Page() {
-  const [addCard, setAddCard] = useState([]);
+  const [addCardInfo, setAddCardInfo] = useState([]);
 
   useEffect(() => {
     const savedCards = localStorage.getItem("savedCards");
     if (savedCards) {
-      setAddCard(JSON.parse(savedCards));
+      setAddCardInfo(JSON.parse(savedCards));
     }
   }, []);
 
@@ -20,7 +20,7 @@ export default function Page() {
       sectionType: "applied",
     };
 
-    setAddCard((prevCards) => {
+    setAddCardInfo((prevCards) => {
       const updatedCards = [...prevCards, newCard];
       localStorage.setItem("savedCards", JSON.stringify(updatedCards));
       return updatedCards;
@@ -28,7 +28,7 @@ export default function Page() {
   }
 
   function handleCardChange(id, updatedData) {
-    setAddCard((prevCards) => {
+    setAddCardInfo((prevCards) => {
       const updatedCards = prevCards.map((card) =>
         card.id === id ? { ...card, ...updatedData } : card
       );
@@ -38,9 +38,9 @@ export default function Page() {
   }
 
   const deleteCard = (id) => {
-    const updatedCards = addCard.filter((card) => card.id !== id);
+    const updatedCards = addCardInfo.filter((card) => card.id !== id);
     localStorage.setItem("savedCards", JSON.stringify(updatedCards));
-    setAddCard(updatedCards);
+    setAddCardInfo(updatedCards);
   };
 
   return (
@@ -52,7 +52,7 @@ export default function Page() {
         </button>
       </div>
       <Sections
-        cards={addCard}
+        cards={addCardInfo}
         onSectionChange={handleCardChange}
         onDelete={deleteCard}
       />
@@ -79,6 +79,20 @@ function Sections({ cards, onSectionChange, onDelete }) {
     }
   };
 
+  function renderCards(sectionType) {
+    return cards
+      .filter((card) => card.sectionType === sectionType)
+      .map((card) => (
+        <Card
+          key={card.id}
+          cardData={card}
+          onDataChange={(updatedData) => onSectionChange(card.id, updatedData)}
+          onDelete={onDelete}
+          cardId={card.id}
+        />
+      ));
+  }
+
   return (
     <>
       <div id="sections">
@@ -97,139 +111,49 @@ function Sections({ cards, onSectionChange, onDelete }) {
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
-            {cards
-              .filter((card) => card.sectionType === "applied")
-              .map((card) => (
-                <Card
-                  key={card.id}
-                  cardData={card}
-                  onDataChange={(updatedData) =>
-                    onSectionChange(card.id, updatedData)
-                  }
-                  onDelete={onDelete}
-                  cardId={card.id}
-                />
-              ))}
+            {renderCards("applied")}
           </div>
           <div
             className="content phone_screen"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onDelete={onDelete}
           >
-            {cards
-              .filter((card) => card.sectionType === "phone_screen")
-              .map((card) => (
-                <Card
-                  key={card.id}
-                  cardData={card}
-                  onDataChange={(updatedData) =>
-                    onSectionChange(card.id, updatedData)
-                  }
-                  onDelete={onDelete}
-                  cardId={card.id}
-                />
-              ))}
+            {renderCards("phone_screen")}
           </div>
           <div
             className="content technical"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onDelete={onDelete}
           >
-            {cards
-              .filter((card) => card.sectionType === "technical")
-              .map((card) => (
-                <Card
-                  key={card.id}
-                  cardData={card}
-                  onDataChange={(updatedData) =>
-                    onSectionChange(card.id, updatedData)
-                  }
-                  onDelete={onDelete}
-                  cardId={card.id}
-                />
-              ))}
+            {renderCards("technical")}
           </div>
           <div
             className="content take_home"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onDelete={onDelete}
           >
-            {cards
-              .filter((card) => card.sectionType === "take_home")
-              .map((card) => (
-                <Card
-                  key={card.id}
-                  cardData={card}
-                  onDataChange={(updatedData) =>
-                    onSectionChange(card.id, updatedData)
-                  }
-                  onDelete={onDelete}
-                  cardId={card.id}
-                />
-              ))}
+            {renderCards("take_home")}
           </div>
           <div
             className="content panel"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onDelete={onDelete}
           >
-            {cards
-              .filter((card) => card.sectionType === "panel")
-              .map((card) => (
-                <Card
-                  key={card.id}
-                  cardData={card}
-                  onDataChange={(updatedData) =>
-                    onSectionChange(card.id, updatedData)
-                  }
-                  onDelete={onDelete}
-                  cardId={card.id}
-                />
-              ))}
+            {renderCards("panel")}
           </div>
           <div
             className="content offer"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onDelete={onDelete}
           >
-            {cards
-              .filter((card) => card.sectionType === "offer")
-              .map((card) => (
-                <Card
-                  key={card.id}
-                  cardData={card}
-                  onDataChange={(updatedData) =>
-                    onSectionChange(card.id, updatedData)
-                  }
-                  onDelete={onDelete}
-                  cardId={card.id}
-                />
-              ))}
+            {renderCards("offer")}
           </div>
           <div
             className="content rejected"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onDelete={onDelete}
           >
-            {cards
-              .filter((card) => card.sectionType === "rejected")
-              .map((card) => (
-                <Card
-                  key={card.id}
-                  cardData={card}
-                  onDataChange={(updatedData) =>
-                    onSectionChange(card.id, updatedData)
-                  }
-                  onDelete={onDelete}
-                  cardId={card.id}
-                />
-              ))}
+            {renderCards("rejected")}
           </div>
         </div>
       </div>
