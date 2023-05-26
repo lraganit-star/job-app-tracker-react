@@ -184,13 +184,14 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
         draggable={true}
         onDragStart={handleDragStart}
       >
+        <button id="deletecard" onClick={handleDelete}>
+          x
+        </button>
         <form>
-          <button id="deletecard" onClick={handleDelete}>
-            x
-          </button>
           <div>
             <BuildForm
               formid="compname"
+              imgSrc="../public/briefcase.png"
               name="compname"
               placeholder="Company Name"
               value={cardData.compname}
@@ -198,6 +199,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="jobtitle"
+              imgSrc="../public/id_badge.png"
               name="jobtitle"
               placeholder="Job Title"
               value={cardData.jobtitle}
@@ -205,6 +207,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="location"
+              imgSrc="../public/building.png"
               name="location"
               placeholder="Office Location"
               value={cardData.location}
@@ -212,6 +215,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="link"
+              imgSrc="../public/globe_and_mouse.png"
               name="link"
               placeholder="Application Link"
               value={cardData.link}
@@ -224,20 +228,24 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
   );
 }
 
-function BuildForm({ formid, name, placeholder, value, onChange }) {
+function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
   const input = (
-    <label key={formid}>
-      {placeholder}
-      <input
-        type="text"
-        className="form"
-        id={formid}
-        name={name}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-      />
-    </label>
+    <>
+      <div className="form_layout">
+        <img className="icons" src={imgSrc} alt={name}></img>
+        <label key={formid}>
+          <input
+            type="text"
+            className="form"
+            // id={formid}
+            // name={name}
+            value={value}
+            placeholder={placeholder}
+            onChange={onChange}
+          />
+        </label>
+      </div>
+    </>
   );
   return input;
 }
