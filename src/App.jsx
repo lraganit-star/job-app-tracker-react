@@ -230,20 +230,26 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
 
 function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
   const handleMouseEnter = (e) => {
-    e.target.nextSibling.style.display = "block";
-    e.target.nextSibling.style.opacity = 1;
+    const tooltip = e.currentTarget.querySelector(".tooltip");
+    tooltip.style.display = "block";
+    tooltip.style.opacity = 1;
   };
 
   const handleMouseLeave = (e) => {
-    e.target.nextSibling.style.display = "none";
-    e.target.nextSibling.style.display = 0;
+    const tooltip = e.currentTarget.querySelector(".tooltip");
+    tooltip.style.display = "none";
+    tooltip.style.opacity = 0;
   };
 
   return (
     <>
       <div className="form_layout">
         <img className="icons" src={imgSrc} alt={name}></img>
-        <div className="input-container">
+        <div
+          className="input-container"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <label key={formid}>
             <input
               type="text"
@@ -253,11 +259,15 @@ function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
               value={value}
               placeholder={placeholder}
               onChange={onChange}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
             />
           </label>
-          <span className="tooltip">hi</span>
+          <span
+            className="tooltip"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {placeholder}
+          </span>
         </div>
       </div>
     </>
