@@ -229,23 +229,37 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
 }
 
 function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
-  const input = (
+  const handleMouseEnter = (e) => {
+    e.target.nextSibling.style.display = "block";
+    e.target.nextSibling.style.opacity = 1;
+  };
+
+  const handleMouseLeave = (e) => {
+    e.target.nextSibling.style.display = "none";
+    e.target.nextSibling.style.display = 0;
+  };
+
+  return (
     <>
       <div className="form_layout">
         <img className="icons" src={imgSrc} alt={name}></img>
-        <label key={formid}>
-          <input
-            type="text"
-            className="form"
-            // id={formid}
-            // name={name}
-            value={value}
-            placeholder={placeholder}
-            onChange={onChange}
-          />
-        </label>
+        <div className="input-container">
+          <label key={formid}>
+            <input
+              type="text"
+              className="form"
+              // id={formid}
+              // name={name}
+              value={value}
+              placeholder={placeholder}
+              onChange={onChange}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            />
+          </label>
+          <span className="tooltip">hi</span>
+        </div>
       </div>
     </>
   );
-  return input;
 }
