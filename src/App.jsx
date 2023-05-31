@@ -254,8 +254,8 @@ function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
             <input
               type="text"
               className="form"
-              // id={formid}
-              // name={name}
+              id={formid}
+              name={name}
               value={value}
               placeholder={placeholder}
               onChange={onChange}
