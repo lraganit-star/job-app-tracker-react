@@ -128,7 +128,6 @@ button {
 }
 
 .tooltip {
-  display: none;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -140,4 +139,6 @@ button {
   left: 50%;
   margin-left: -60px;
   opacity: 0;
+
+  pointer-events: none;
 }

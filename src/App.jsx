@@ -61,6 +61,13 @@ export default function Page() {
 }
 
 function Sections({ cards, onSectionChange, onDelete }) {
+  let draggedCard = null;
+
+  const handleDragStart = (e) => {
+    draggedCard = e.target;
+    e.dataTransfer.setData("text/plain", "");
+  };
+
   const handleDragOver = (e) => {
     e.preventDefault();
   };
@@ -71,12 +78,19 @@ function Sections({ cards, onSectionChange, onDelete }) {
     const droppedSection = e.target;
     const droppedItemId = e.dataTransfer.getData("text/plain");
 
+    const dropCardOrder = Number(window.getComputedStyle(droppedSection).order);
+    const draggedCardOrder = Number(window.getComputedStyle(draggedCard).order);
+    draggedCard.style.order = dropCardOrder;
+    dropCard.style.order = draggedCardOrder;
+
     if (droppedSection.classList.contains("content")) {
       const newSection = droppedSection.classList[1];
       const cardId = Number.parseInt(droppedItemId);
 
       onSectionChange(cardId, { sectionType: newSection });
     }
+
+    draggedCard = null;
   };
 
   function renderCards(sectionType) {
@@ -108,6 +122,7 @@ function Sections({ cards, onSectionChange, onDelete }) {
         <div id="sectionContent">
           <div
             className="content applied"
+            onDragStart={handleDragOver}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
@@ -115,6 +130,7 @@ function Sections({ cards, onSectionChange, onDelete }) {
           </div>
           <div
             className="content phone_screen"
+            onDragStart={handleDragOver}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
@@ -122,6 +138,7 @@ function Sections({ cards, onSectionChange, onDelete }) {
           </div>
           <div
             className="content technical"
+            onDragStart={handleDragOver}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
@@ -129,6 +146,7 @@ function Sections({ cards, onSectionChange, onDelete }) {
           </div>
           <div
             className="content take_home"
+            onDragStart={handleDragOver}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
@@ -136,6 +154,7 @@ function Sections({ cards, onSectionChange, onDelete }) {
           </div>
           <div
             className="content panel"
+            onDragStart={handleDragOver}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
@@ -143,6 +162,7 @@ function Sections({ cards, onSectionChange, onDelete }) {
           </div>
           <div
             className="content offer"
+            onDragStart={handleDragOver}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
@@ -150,6 +170,7 @@ function Sections({ cards, onSectionChange, onDelete }) {
           </div>
           <div
             className="content rejected"
+            onDragStart={handleDragOver}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
@@ -231,12 +252,14 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
 function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
   const handleMouseEnter = (e) => {
     const tooltip = e.currentTarget.querySelector(".tooltip");
+    console.log(tooltip);
     tooltip.style.display = "block";
     tooltip.style.opacity = 1;
   };
 
   const handleMouseLeave = (e) => {
     const tooltip = e.currentTarget.querySelector(".tooltip");
+    console.log(tooltip);
     tooltip.style.display = "none";
     tooltip.style.opacity = 0;
   };
