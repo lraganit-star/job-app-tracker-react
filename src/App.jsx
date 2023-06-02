@@ -206,7 +206,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
           <div>
             <BuildForm
               formid="compname"
-              imgSrc="../public/briefcase.png"
+              imgSrc="../public/briefcase_midjourney.png"
               name="compname"
               placeholder="Company Name"
               value={cardData.compname}
@@ -214,7 +214,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="jobtitle"
-              imgSrc="../public/id_badge.png"
+              imgSrc="../public/id_midjourney.png"
               name="jobtitle"
               placeholder="Job Title"
               value={cardData.jobtitle}
@@ -222,7 +222,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="location"
-              imgSrc="../public/building.png"
+              imgSrc="../public/building_midjourney.png"
               name="location"
               placeholder="Office Location"
               value={cardData.location}
@@ -230,7 +230,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="link"
-              imgSrc="../public/globe_and_mouse.png"
+              imgSrc="../public/chain_midjourney.png"
               name="link"
               placeholder="Application Link"
               value={cardData.link}
