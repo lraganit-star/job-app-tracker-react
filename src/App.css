@@ -13,11 +13,11 @@ div, input {
   color: #355070;
   background-color: white;
   
-  border: 1px solid #d4a8a1;
+  border: 1px solid #d1cfe2;
   border-top: 5px solid #d1cfe2;
   margin: 10px;
-  height: 200px;
-  width: 175px;
+  height: 300px;
+  width: 190px;
   font-size: 14px;
 
   cursor: grab;
@@ -26,8 +26,19 @@ div, input {
 
 input {
   margin-left: auto;
-  width: 100px;
+  width: 125px;
   font-size: 10px;
+  z-index: 10;
+}
+
+
+#notes {
+  width: 125px;
+  height: 40px;
+
+  resize: none;
+  overflow: auto;
+  white-space: pre-wrap;
 }
 
 form {
@@ -52,27 +63,37 @@ label{
 }
 
 .icons {
-  width: 100%;
-  height: 35px;
+  width: 35px;
+  height: 100%;
   padding: 5px;
 
   align-items: center;
+}
+
+#headers {
+  display: flex;
+  flex-direction: column;
+
+  position: sticky;
+  top: 0;
+  z-index: 12;
 }
 
 #mainHeader {
   display:flex;
   background-color: #b8e0d2;
   width: 150%;
+
+  position: sticky;
+  left: 0px;
+  top: 0px;
 }
 
-#headerContent {
-  position: sticky;
-  left: 0;
-
+#mainHeaderContent {
   display: flex;
 }
 
-#sectionHeader {
+#mainHeaderTitle {
   padding: 15px;
   color: #4a6153;
   font-size: 36px;
@@ -81,17 +102,19 @@ label{
   align-items: center;
 }
 
-#headerIcon {
+#mainHeaderIcon {
   height: 50px;
   width: 50px;
   padding: 10px;
 }
 
-#sections {
+#sectionHeader {
+  background-color: #D8F3F5;
+  border-bottom: 1px solid #567BA8;
+
   display: flex;
   flex-direction: column;
 
-  font-size: 24px;
   width: 150%;
   overflow-x: auto;
 }
@@ -100,7 +123,10 @@ label{
   display:flex; 
 
   color: #567BA8;
-  padding: 30px;
+  background-color: #D8F3F5;
+  border-bottom: 1px solid #567BA8;
+  padding: 20px;
+  font-size: 24px;
 }
 
 .header {
@@ -115,6 +141,7 @@ label{
   display: flex;
   justify-content: flex-start;
   flex: 0 0 300px;
+  padding-top: 140px;
 }
 
 button {
@@ -156,10 +183,12 @@ button {
   justify-content: center;
   align-items: center;
 }
-.input-container {
+.input_container {
   position:relative;
   display: inline-block;
 }
+
+
 
 .tooltip {
   background-color: #555;
@@ -168,7 +197,7 @@ button {
   border-radius: 5px;
   padding: 5px;
   position: absolute;
-  z-index: 1;
+  z-index: 11;
   bottom: 100%;
   left: 50%;
   margin-left: -60px;
@@ -190,8 +219,26 @@ button {
   left: 0;
   bottom: 0;
   width: 100%;
+  z-index: 12;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#mock_card {
+  height: 100px;
+  width: 190px;
+  padding: 5px;
+
+  background-color: white;
+  border: 5px solid #d1cfe2;
+
+  display: flex;
+}
+
+#cardIcon{
+  height: 50px;
+  width: 50px;
+  padding: 5px;
 }

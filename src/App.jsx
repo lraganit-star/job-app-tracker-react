@@ -45,14 +45,37 @@ export default function Page() {
 
   return (
     <>
-      <div id="mainHeader">
-        <div id="headerContent">
-          <img id="headerIcon" src="/mascot.png"></img>
-          <div id="sectionHeader">
-            Leslie's Lovely Jobquest
-            <button onClick={handleClick} id="add_card">
-              +
-            </button>
+      <div id="headers">
+        <div id="mainHeader">
+          <div id="mainHeaderContent">
+            {/* <div id="dropDown">
+              <ul>
+                <li className="dropDownElement">Applied</li>
+                <li className="dropDownElement">Phone Screen</li>
+                <li className="dropDownElement">Technical</li>
+                <li className="dropDownElement">Take Home</li>
+                <li className="dropDownElement">Panel Interview</li>
+                <li className="dropDownElement">Offer</li>
+                <li className="dropDownElement">Rejected</li>
+              </ul>
+            </div> */}
+            <img id="mainHeaderIcon" src="/mascot.png"></img>
+            <div id="mainHeaderTitle">
+              Leslie's Lovely Jobquest
+              <button onClick={handleClick} id="add_card">
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="sectionsHeader">
+          <div id="sectionHeaders">
+            <div className="header applied">Applied</div>
+            <div className="header phone_screen">Phone Screen</div>
+            <div className="header technical">Technical Interview</div>
+            <div className="header take_home">Take Home</div>
+            <div className="header panel">Panel Interview</div>
+            <div className="header offer">Job Offer</div>{" "}
           </div>
         </div>
       </div>
@@ -61,6 +84,7 @@ export default function Page() {
         onSectionChange={handleCardChange}
         onDelete={deleteCard}
       />
+
       <div id="footer">
         <div id="footerMessage">I hope you have a fun time job hunting!</div>
       </div>
@@ -110,66 +134,60 @@ function Sections({ cards, onSectionChange, onDelete }) {
 
   return (
     <>
-      <div id="sections">
-        <div id="sectionHeaders">
-          <div className="header applied">Applied</div>
-          <div className="header phone_screen">Phone Screen</div>
-          <div className="header technical">Technical Interview</div>
-          <div className="header take_home">Take Home</div>
-          <div className="header panel">Panel Interview</div>
-          <div className="header offer">Job Offer</div>
-          <div className="header rejected">Rejected</div>
+      <div id="sectionContent">
+        <div
+          className="content applied"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {renderCards("applied")}
+          <div id="mock_card">
+            <div id="mockCardContent">
+              <img id="cardIcon" src="/mascot.png"></img>
+            </div>
+          </div>
         </div>
-        <div id="sectionContent">
-          <div
-            className="content applied"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            {renderCards("applied")}
-          </div>
-          <div
-            className="content phone_screen"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            {renderCards("phone_screen")}
-          </div>
-          <div
-            className="content technical"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            {renderCards("technical")}
-          </div>
-          <div
-            className="content take_home"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            {renderCards("take_home")}
-          </div>
-          <div
-            className="content panel"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            {renderCards("panel")}
-          </div>
-          <div
-            className="content offer"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            {renderCards("offer")}
-          </div>
-          <div
-            className="content rejected"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            {renderCards("rejected")}
-          </div>
+        <div
+          className="content phone_screen"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {renderCards("phone_screen")}
+        </div>
+        <div
+          className="content technical"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {renderCards("technical")}
+        </div>
+        <div
+          className="content take_home"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {renderCards("take_home")}
+        </div>
+        <div
+          className="content panel"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {renderCards("panel")}
+        </div>
+        <div
+          className="content offer"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {renderCards("offer")}
+        </div>
+        <div
+          className="content rejected"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {renderCards("rejected")}
         </div>
       </div>
     </>
@@ -206,6 +224,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
           <div>
             <BuildForm
               formid="compname"
+              type="text"
               imgSrc="/briefcase_midjourney.png"
               name="compname"
               placeholder="Company Name"
@@ -214,6 +233,7 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="jobtitle"
+              type="text"
               imgSrc="/id_midjourney.png"
               name="jobtitle"
               placeholder="Job Title"
@@ -221,7 +241,17 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
               onChange={handleInputChange}
             />
             <BuildForm
+              formid="applydate"
+              type="date"
+              imgSrc="/building.png"
+              name="applydate"
+              placeholder="Application Date"
+              value={cardData.applydate}
+              onChange={handleInputChange}
+            />
+            <BuildForm
               formid="location"
+              type="text"
               imgSrc="/building_midjourney.png"
               name="location"
               placeholder="Office Location"
@@ -230,10 +260,20 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
             />
             <BuildForm
               formid="link"
+              type="url"
               imgSrc="/chain_midjourney.png"
               name="link"
               placeholder="Application Link"
               value={cardData.link}
+              onChange={handleInputChange}
+            />
+            <BuildForm
+              formid="notes"
+              type="text"
+              imgSrc="building.png"
+              name="notes"
+              placeholder="Notes"
+              value={cardData.notes}
               onChange={handleInputChange}
             />
           </div>
@@ -243,7 +283,15 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
   );
 }
 
-function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
+function BuildForm({
+  formid,
+  type,
+  imgSrc,
+  name,
+  placeholder,
+  value,
+  onChange,
+}) {
   const handleMouseEnter = (e) => {
     const tooltip = e.currentTarget.querySelector(".tooltip");
     tooltip.style.display = "block";
@@ -261,13 +309,13 @@ function BuildForm({ formid, imgSrc, name, placeholder, value, onChange }) {
       <div className="form_layout">
         <img className="icons" src={imgSrc} alt={name}></img>
         <div
-          className="input-container"
+          className="input_container"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           <label key={formid}>
             <input
-              type="text"
+              type={type}
               className="form"
               id={formid}
               name={name}
