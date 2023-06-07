@@ -68,14 +68,15 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div id="sectionsHeader">
+        <div id="sectionHeader">
           <div id="sectionHeaders">
             <div className="header applied">Applied</div>
             <div className="header phone_screen">Phone Screen</div>
             <div className="header technical">Technical Interview</div>
             <div className="header take_home">Take Home</div>
             <div className="header panel">Panel Interview</div>
-            <div className="header offer">Job Offer</div>{" "}
+            <div className="header offer">Job Offer</div>
+            <div className="header rejected">Rejected</div>
           </div>
         </div>
       </div>
@@ -141,11 +142,11 @@ function Sections({ cards, onSectionChange, onDelete }) {
           onDrop={handleDrop}
         >
           {renderCards("applied")}
-          <div id="mock_card">
+          {/* <div id="mock_card">
             <div id="mockCardContent">
               <img id="cardIcon" src="/mascot.png"></img>
             </div>
-          </div>
+          </div> */}
         </div>
         <div
           className="content phone_screen"
@@ -241,9 +242,18 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
               onChange={handleInputChange}
             />
             <BuildForm
+              formid="link"
+              type="url"
+              imgSrc="/chain_midjourney.png"
+              name="link"
+              placeholder="Application Link"
+              value={cardData.link}
+              onChange={handleInputChange}
+            />
+            <BuildForm
               formid="applydate"
               type="date"
-              imgSrc="/building.png"
+              imgSrc="/calendar_midjourney.png"
               name="applydate"
               placeholder="Application Date"
               value={cardData.applydate}
@@ -259,18 +269,9 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
               onChange={handleInputChange}
             />
             <BuildForm
-              formid="link"
-              type="url"
-              imgSrc="/chain_midjourney.png"
-              name="link"
-              placeholder="Application Link"
-              value={cardData.link}
-              onChange={handleInputChange}
-            />
-            <BuildForm
               formid="notes"
               type="text"
-              imgSrc="building.png"
+              imgSrc="/notebook_midjourney.png"
               name="notes"
               placeholder="Notes"
               value={cardData.notes}
