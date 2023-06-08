@@ -4,12 +4,13 @@ body {
   width: 115%;
 }
 
-div, input {
+div, input, textarea {
   font-family: 'Comfortaa', cursive;
 }
 
 .card {
   padding: 10px;
+  padding-bottom: 15px;
   color: #355070;
   background-color: white;
   
@@ -35,10 +36,14 @@ input {
 #notes {
   width: 125px;
   height: 40px;
+  padding: 3px;
+  font-size: 10px;
 
   resize: none;
   overflow: auto;
   white-space: pre-wrap;
+
+  text-align: left;
 }
 
 form {

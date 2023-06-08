@@ -305,35 +305,69 @@ function BuildForm({
     tooltip.style.opacity = 0;
   };
 
-  return (
-    <>
-      <div className="form_layout">
-        <img className="icons" src={imgSrc} alt={name}></img>
-        <div
-          className="input_container"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <label key={formid}>
-            <input
-              type={type}
-              className="form"
-              id={formid}
-              name={name}
-              value={value}
-              placeholder={placeholder}
-              onChange={onChange}
-            />
-          </label>
-          <span
-            className="tooltip"
+  if (formid == "notes") {
+    return (
+      <>
+        <div className="form_layout">
+          <img className="icons" src={imgSrc} alt={name}></img>
+          <div
+            className="input_container"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            {placeholder}
-          </span>
+            <label key={formid}>
+              <textarea
+                type={type}
+                className="form"
+                id={formid}
+                name={name}
+                value={value}
+                placeholder={placeholder}
+                onChange={onChange}
+              />
+            </label>
+            <span
+              className="tooltip"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              {placeholder}
+            </span>
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="form_layout">
+          <img className="icons" src={imgSrc} alt={name}></img>
+          <div
+            className="input_container"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <label key={formid}>
+              <input
+                type={type}
+                className="form"
+                id={formid}
+                name={name}
+                value={value}
+                placeholder={placeholder}
+                onChange={onChange}
+              />
+            </label>
+            <span
+              className="tooltip"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              {placeholder}
+            </span>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
