@@ -48,6 +48,9 @@ export default function Page() {
       <div id="headers">
         <div id="mainHeader">
           <div id="mainHeaderContent">
+            <button id="dropDownContainer">
+              <img id="mainDropDown" src="/dropdown_midjourney.png"></img>
+            </button>
             {/* <div id="dropDown">
               <ul>
                 <li className="dropDownElement">Applied</li>
@@ -62,7 +65,7 @@ export default function Page() {
             <img id="mainHeaderIcon" src="/mascot.png"></img>
             <div id="mainHeaderTitle">
               Leslie's Lovely Jobquest
-              <button onClick={handleClick} id="add_card">
+              <button id="addCard" onClick={handleClick}>
                 +
               </button>
             </div>
@@ -305,17 +308,17 @@ function BuildForm({
     tooltip.style.opacity = 0;
   };
 
-  if (formid == "notes") {
-    return (
-      <>
-        <div className="form_layout">
-          <img className="icons" src={imgSrc} alt={name}></img>
-          <div
-            className="input_container"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <label key={formid}>
+  return (
+    <>
+      <div className="form_layout">
+        <img className="icons" src={imgSrc} alt={name}></img>
+        <div
+          className="input_container"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <label key={formid}>
+            {formid === "notes" ? (
               <textarea
                 type={type}
                 className="form"
@@ -325,29 +328,7 @@ function BuildForm({
                 placeholder={placeholder}
                 onChange={onChange}
               />
-            </label>
-            <span
-              className="tooltip"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              {placeholder}
-            </span>
-          </div>
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <div className="form_layout">
-          <img className="icons" src={imgSrc} alt={name}></img>
-          <div
-            className="input_container"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <label key={formid}>
+            ) : (
               <input
                 type={type}
                 className="form"
@@ -357,17 +338,17 @@ function BuildForm({
                 placeholder={placeholder}
                 onChange={onChange}
               />
-            </label>
-            <span
-              className="tooltip"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              {placeholder}
-            </span>
-          </div>
+            )}
+          </label>
+          <span
+            className="tooltip"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {placeholder}
+          </span>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }

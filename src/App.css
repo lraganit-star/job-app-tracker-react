@@ -24,7 +24,6 @@ div, input, textarea {
   cursor: grab;
 }
 
-
 input {
   margin-left: auto;
   width: 125px;
@@ -150,7 +149,7 @@ label{
   flex: 0 0 300px;
 }
 
-button {
+#addCard {
   height: 30px;
   width: 30px;
   margin-left: 20px;
@@ -176,19 +175,21 @@ button {
 }
 
 #deletecard {
+  color: #d4a8a1;
+  cursor: pointer;
   margin-left: auto;
   height: 17px;
   width: 17px;
   background-color: white;
   border: none;
   padding: 0px;
-
   font-size: 17px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .input_container {
   position:relative;
   display: inline-block;
@@ -213,7 +214,7 @@ button {
 }
 
 .content.applied {
-  padding-left: 30px;
+  padding-left: 15px;
 }
 
 #footer {
@@ -247,4 +248,18 @@ button {
   height: 50px;
   width: 50px;
   padding: 5px;
+}
+
+#dropDownContainer {
+  border:none;
+  background-color: transparent;
+
+  padding: 15px;
+}
+
+#mainDropDown {
+  height: 30px;
+  width: 30px;
+
+  cursor:pointer;
 }
