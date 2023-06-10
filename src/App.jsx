@@ -3,6 +3,7 @@ import "./App.css";
 
 export default function Page() {
   const [addCardInfo, setAddCardInfo] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const savedCards = localStorage.getItem("savedCards");
@@ -43,25 +44,44 @@ export default function Page() {
     setAddCardInfo(updatedCards);
   };
 
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   return (
     <>
       <div id="headers">
         <div id="mainHeader">
           <div id="mainHeaderContent">
-            <button id="dropDownContainer">
-              <img id="mainDropDown" src="/dropdown_midjourney.png"></img>
-            </button>
-            {/* <div id="dropDown">
-              <ul>
-                <li className="dropDownElement">Applied</li>
-                <li className="dropDownElement">Phone Screen</li>
-                <li className="dropDownElement">Technical</li>
-                <li className="dropDownElement">Take Home</li>
-                <li className="dropDownElement">Panel Interview</li>
-                <li className="dropDownElement">Offer</li>
-                <li className="dropDownElement">Rejected</li>
-              </ul>
-            </div> */}
+            <div id="dropDownContainer">
+              <button id="dropDownButton" onClick={toggleMenu}>
+                <img id="dropDownImage" src="/three_midjourne.png"></img>
+                {isOpen && (
+                  <div id="dropDownContent">
+                    <a href="#appliedNav" className="dropDownElement">
+                      Applied
+                    </a>
+                    <a href="#phoneScreenNav" className="dropDownElement">
+                      Phone Screen
+                    </a>
+                    <a href="#technicalNav" className="dropDownElement">
+                      Technical
+                    </a>
+                    <a href="#takeHomeNav" className="dropDownElement">
+                      Take Home
+                    </a>
+                    <a href="#panelNav" className="dropDownElement">
+                      Panel Interview
+                    </a>
+                    <a href="#offerNav" className="dropDownElement">
+                      Offer
+                    </a>
+                    <a href="#rejectedNav" className="dropDownElement">
+                      Rejected
+                    </a>
+                  </div>
+                )}
+              </button>
+            </div>
+
             <img id="mainHeaderIcon" src="/mascot.png"></img>
             <div id="mainHeaderTitle">
               Leslie's Lovely Jobquest
@@ -73,13 +93,27 @@ export default function Page() {
         </div>
         <div id="sectionHeader">
           <div id="sectionHeaders">
-            <div className="header applied">Applied</div>
-            <div className="header phone_screen">Phone Screen</div>
-            <div className="header technical">Technical Interview</div>
-            <div className="header take_home">Take Home</div>
-            <div className="header panel">Panel Interview</div>
-            <div className="header offer">Job Offer</div>
-            <div className="header rejected">Rejected</div>
+            <div className="header applied" id="appliedNav">
+              Applied
+            </div>
+            <div className="header phone_screen" id="phoneScreenNav">
+              Phone Screen
+            </div>
+            <div className="header technical" id="technicalNav">
+              Technical Interview
+            </div>
+            <div className="header take_home" id="takeHomeNav">
+              Take Home
+            </div>
+            <div className="header panel" id="panelNav">
+              Panel Interview
+            </div>
+            <div className="header offer" id="offerNav">
+              Job Offer
+            </div>
+            <div className="header rejected" id="rejectedNav">
+              Rejected
+            </div>
           </div>
         </div>
       </div>
