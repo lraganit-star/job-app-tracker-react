@@ -50,38 +50,37 @@ export default function Page() {
     <>
       <div id="headers">
         <div id="mainHeader">
+          <div id="dropDownContainer">
+            <button id="dropDownButton" onClick={toggleDropDown}>
+              <img id="dropDownImage" src="/three_midjourney.png"></img>
+              {isOpen && (
+                <div id="dropDownContent">
+                  <a href="#appliedNav" className="dropDownElement">
+                    Applied
+                  </a>
+                  <a href="#phoneScreenNav" className="dropDownElement">
+                    Phone Screen
+                  </a>
+                  <a href="#technicalNav" className="dropDownElement">
+                    Technical
+                  </a>
+                  <a href="#takeHomeNav" className="dropDownElement">
+                    Take Home
+                  </a>
+                  <a href="#panelNav" className="dropDownElement">
+                    Panel Interview
+                  </a>
+                  <a href="#offerNav" className="dropDownElement">
+                    Offer
+                  </a>
+                  <a href="#rejectedNav" className="dropDownElement">
+                    Rejected
+                  </a>
+                </div>
+              )}
+            </button>
+          </div>
           <div id="mainHeaderContent">
-            <div id="dropDownContainer">
-              <button id="dropDownButton" onClick={toggleDropDown}>
-                <img id="dropDownImage" src="/three_midjourne.png"></img>
-                {isOpen && (
-                  <div id="dropDownContent">
-                    <a href="#appliedNav" className="dropDownElement">
-                      Applied
-                    </a>
-                    <a href="#phoneScreenNav" className="dropDownElement">
-                      Phone Screen
-                    </a>
-                    <a href="#technicalNav" className="dropDownElement">
-                      Technical
-                    </a>
-                    <a href="#takeHomeNav" className="dropDownElement">
-                      Take Home
-                    </a>
-                    <a href="#panelNav" className="dropDownElement">
-                      Panel Interview
-                    </a>
-                    <a href="#offerNav" className="dropDownElement">
-                      Offer
-                    </a>
-                    <a href="#rejectedNav" className="dropDownElement">
-                      Rejected
-                    </a>
-                  </div>
-                )}
-              </button>
-            </div>
-
             <img id="mainHeaderIcon" src="/mascot.png"></img>
             <div id="mainHeaderTitle">
               Leslie's Lovely Jobquest
