@@ -44,7 +44,7 @@ export default function Page() {
     setAddCardInfo(updatedCards);
   };
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleDropDown = () => setIsOpen(!isOpen);
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function Page() {
         <div id="mainHeader">
           <div id="mainHeaderContent">
             <div id="dropDownContainer">
-              <button id="dropDownButton" onClick={toggleMenu}>
+              <button id="dropDownButton" onClick={toggleDropDown}>
                 <img id="dropDownImage" src="/three_midjourne.png"></img>
                 {isOpen && (
                   <div id="dropDownContent">
@@ -131,13 +131,6 @@ export default function Page() {
 }
 
 function Sections({ cards, onSectionChange, onDelete }) {
-  // let draggedCard = null;
-
-  // const handleDragStart = (e) => {
-  //   draggedCard = e.target;
-  //   e.dataTransfer.setData("text/plain", "");
-  // };
-
   const handleDragOver = (e) => {
     e.preventDefault();
   };

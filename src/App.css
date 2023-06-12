@@ -278,3 +278,13 @@ label{
 
   list-style-type: "*";
 }
+
+#dropDownContent a:hover {
+  background-color: #d1cfe2;
+}
+
+.dropDownElement {
+  width: 100%;
+
+  display: flex; 
+}
