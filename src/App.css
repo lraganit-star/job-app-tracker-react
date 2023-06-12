@@ -265,7 +265,7 @@ label{
 
   cursor:pointer;
   position:fixed;
-  top: 10px;
+  top: 5px;
   left: 10px;
 }
 
@@ -293,6 +293,10 @@ label{
 
 .dropDownElement {
   width: 100%;
+  padding: 5px;
+  text-decoration: none;
+  color: #311465;
 
   display: flex; 
+  
 }
