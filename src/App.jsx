@@ -5,6 +5,8 @@ export default function Page() {
   const [addCardInfo, setAddCardInfo] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log("Card Info", addCardInfo);
+
   useEffect(() => {
     const savedCards = localStorage.getItem("savedCards");
     if (savedCards) {
@@ -15,7 +17,7 @@ export default function Page() {
   function handleClick() {
     const newCard = {
       id: Date.now(),
-      compname: "",
+      companyname: "",
       jobtitle: "",
       link: "",
       sectionType: "applied",
@@ -49,19 +51,17 @@ export default function Page() {
 
   const sectionCountHeader = (section) => {
     const sectionCountObj = Object.values(addCardInfo).reduce(
-      (countObj, subObj) => {
-        const value = subObj["sectionType"];
-        countObj[value] = countObj[value] ? countObj[value] + 1 : 1;
-        return countObj;
+      (sectionCount, card) => {
+        const value = card["sectionType"];
+        sectionCount[value] = sectionCount[value] ? sectionCount[value] + 1 : 1;
+        return sectionCount;
       },
       {}
     );
 
-    if (sectionCountObj[section] == null) {
-      return "(" + 0 + ")";
-    } else {
-      return "(" + sectionCountObj[section] + ")";
-    }
+    return sectionCountObj[section]
+      ? "(" + sectionCountObj[section] + ")"
+      : "(" + 0 + ")";
   };
 
   return (
@@ -169,15 +169,26 @@ function Sections({ cards, onSectionChange, onDelete }) {
   function renderCards(sectionType) {
     return cards
       .filter((card) => card.sectionType === sectionType)
-      .map((card) => (
-        <Card
-          key={card.id}
-          cardData={card}
-          onDataChange={(updatedData) => onSectionChange(card.id, updatedData)}
-          onDelete={onDelete}
-          cardId={card.id}
-        />
-      ));
+      .map((card) =>
+        card.companyname && card.jobtitle ? (
+          <FacadeCard
+            key={card.id}
+            cardData={card}
+            onDelete={onDelete}
+            cardId={card.id}
+          />
+        ) : (
+          <InfoCard
+            key={card.id}
+            cardData={card}
+            onDataChange={(updatedData) =>
+              onSectionChange(card.id, updatedData)
+            }
+            onDelete={onDelete}
+            cardId={card.id}
+          />
+        )
+      );
   }
 
   return (
@@ -189,11 +200,6 @@ function Sections({ cards, onSectionChange, onDelete }) {
           onDrop={handleDrop}
         >
           {renderCards("applied")}
-          {/* <div id="mock_card">
-            <div id="mockCardContent">
-              <img id="cardIcon" src="/mascot.png"></img>
-            </div>
-          </div> */}
         </div>
         <div
           className="content phone_screen"
@@ -242,7 +248,38 @@ function Sections({ cards, onSectionChange, onDelete }) {
   );
 }
 
-function Card({ cardData, onDataChange, onDelete, cardId }) {
+function FacadeCard({ cardData, onDelete, cardId }) {
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("text/plain", e.target.id);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    onDelete(cardId);
+  };
+
+  return (
+    <>
+      <div
+        className="facadeCard"
+        id={cardData.id}
+        draggable={true}
+        onDragStart={handleDragStart}
+      >
+        <button id="deletecard" onClick={handleDelete}>
+          x
+        </button>
+        <div id="facadeCardContent">
+          <img id="facadeCardIcon" src="/mascot.png"></img>
+          <div className="companyName">{cardData.companyname}</div>
+          <div className="jobtitle">{cardData.jobtitle}</div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function InfoCard({ cardData, onDataChange, onDelete, cardId }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onDataChange({ [name]: value });
@@ -271,12 +308,12 @@ function Card({ cardData, onDataChange, onDelete, cardId }) {
         <form>
           <div>
             <BuildForm
-              formid="compname"
+              formid="companyname"
               type="text"
               imgSrc="/briefcase_midjourney.png"
-              name="compname"
+              name="companyname"
               placeholder="Company Name"
-              value={cardData.compname}
+              value={cardData.companyname}
               onChange={handleInputChange}
             />
             <BuildForm
