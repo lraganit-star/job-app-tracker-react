@@ -34,6 +34,7 @@ export default function Page() {
         card.id === id ? { ...card, ...updatedData } : card
       );
       localStorage.setItem("savedCards", JSON.stringify(updatedCards));
+      console.log("updated cards", updatedCards);
       return updatedCards;
     });
   }
@@ -45,6 +46,23 @@ export default function Page() {
   };
 
   const toggleDropDown = () => setIsOpen(!isOpen);
+
+  const sectionCountHeader = (section) => {
+    const sectionCountObj = Object.values(addCardInfo).reduce(
+      (countObj, subObj) => {
+        const value = subObj["sectionType"];
+        countObj[value] = countObj[value] ? countObj[value] + 1 : 1;
+        return countObj;
+      },
+      {}
+    );
+
+    if (sectionCountObj[section] == null) {
+      return "(" + 0 + ")";
+    } else {
+      return "(" + sectionCountObj[section] + ")";
+    }
+  };
 
   return (
     <>
@@ -93,25 +111,25 @@ export default function Page() {
         <div id="sectionHeader">
           <div id="sectionHeaders">
             <div className="header applied" id="appliedNav">
-              Applied
+              Applied {sectionCountHeader("applied")}
             </div>
             <div className="header phone_screen" id="phoneScreenNav">
-              Phone Screen
+              Phone Screen {sectionCountHeader("phone_screen")}
             </div>
             <div className="header technical" id="technicalNav">
-              Technical Interview
+              Technical Interview {sectionCountHeader("technical")}
             </div>
             <div className="header take_home" id="takeHomeNav">
-              Take Home
+              Take Home {sectionCountHeader("take_home")}
             </div>
             <div className="header panel" id="panelNav">
-              Panel Interview
+              Panel Interview {sectionCountHeader("panel")}
             </div>
             <div className="header offer" id="offerNav">
-              Job Offer
+              Job Offer {sectionCountHeader("offer")}
             </div>
             <div className="header rejected" id="rejectedNav">
-              Rejected
+              Rejected {sectionCountHeader("rejected")}
             </div>
           </div>
         </div>
