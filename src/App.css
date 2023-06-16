@@ -17,11 +17,18 @@ div, input, textarea {
   border: 1px solid #d1cfe2;
   border-top: 5px solid #d1cfe2;
   margin: 10px;
-  height: 300px;
+  height: 325px;
   width: 190px;
   font-size: 14px;
 
   cursor: grab;
+}
+
+#submitButton {
+  height: 20px;
+  width: 80px;
+
+  display: flex;
 }
 
 input {
@@ -110,6 +117,10 @@ label{
   display: flex;
   align-items: center;
   flex-shrink: 0;
+}
+
+#mainHeaderTitle button:hover {
+  opacity: 75%;
 }
 
 #mainHeaderIcon {
@@ -242,18 +253,66 @@ label{
   height: 100px;
   width: 190px;
   padding: 5px;
+  margin: 10px;
 
   background-color: white;
   border: 5px solid #d1cfe2;
 
   display: flex;
+  flex-direction: column;
+
   cursor: grab;
+}
+
+.facadeCard button:hover {
+  background-color: #d1cfe2;
+  opacity: 75%;
 }
 
 #facadeCardIcon{
   height: 50px;
   width: 50px;
   padding: 5px;
+}
+
+#facadeCardContent {
+  display: flex;
+}
+
+#facadeCompanyName {
+  font-weight: 100;
+  font-size: 12px;
+  color: #4a6153;
+
+  overflow: hidden;
+}
+
+#facadeJobTitle {
+  font-weight: 500;
+  font-size: 16px;
+  color: #4a6153;
+
+  overflow: hidden;
+}
+
+#facadeEditImage {
+  height: 30px;
+  width: 30px;
+}
+
+#facadeEditButton {
+  background-color: transparent;
+  margin-left: auto; 
+  border: none;
+
+  height: 30px;
+  width: 30px;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #dropDownButton {

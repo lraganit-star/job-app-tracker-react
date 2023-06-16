@@ -271,9 +271,14 @@ function FacadeCard({ cardData, onDelete, cardId }) {
         </button>
         <div id="facadeCardContent">
           <img id="facadeCardIcon" src="/mascot.png"></img>
-          <div className="companyName">{cardData.companyname}</div>
-          <div className="jobtitle">{cardData.jobtitle}</div>
+          <div id="facadeCardInfo">
+            <div id="facadeJobTitle">{cardData.jobtitle}</div>
+            <div id="facadeCompanyName">{cardData.companyname}</div>
+          </div>
         </div>
+        <button id="facadeEditButton">
+          <img id="facadeEditImage" src="/pencil_midjourney.png"></img>
+        </button>
       </div>
     </>
   );
@@ -363,6 +368,7 @@ function InfoCard({ cardData, onDataChange, onDelete, cardId }) {
             />
           </div>
         </form>
+        <button id="submitButton">Submit</button>
       </div>
     </>
   );
