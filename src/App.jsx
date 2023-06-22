@@ -171,32 +171,30 @@ function Sections({ cards, onCardChange, onDelete }) {
     e.preventDefault();
     const buttonId = e.target;
     const id = cardId;
-    // const item = e.dataTransfer.getData("text/plain");
 
-    // if (e.target.id == "submitButton") {
-    //   const cardId = Number.parseInt(item);
-    //   onCardChange(cardId, { facadeCard: true });
-    // }
+    onCardChange(id, { cardFacade: true });
 
     console.log("I'm clicked");
-    console.log("button Id", buttonId);
-    console.log("card id", id);
   };
 
   function renderCards(sectionType) {
     return cards
       .filter((card) => card.sectionType === sectionType)
-      .map((card) => (
-        <InfoCard
-          key={card.id}
-          cardData={card}
-          onDataChange={(updatedData) => onCardChange(card.id, updatedData)}
-          onDelete={onDelete}
-          cardId={card.id}
-          facadeCard={card.facadeCard}
-          onSubmit={handleSubmit}
-        />
-      ));
+      .map((card) =>
+        card.cardFacade ? (
+          <FacadeCard cardData={card} onDelete={onDelete} cardId={card.id} />
+        ) : (
+          <InfoCard
+            key={card.id}
+            cardData={card}
+            onDataChange={(updatedData) => onCardChange(card.id, updatedData)}
+            onDelete={onDelete}
+            cardId={card.id}
+            facadeCard={card.facadeCard}
+            onSubmit={handleSubmit}
+          />
+        )
+      );
   }
 
   return (
