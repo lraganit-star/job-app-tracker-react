@@ -24,11 +24,28 @@ div, input, textarea {
   cursor: grab;
 }
 
+#submitButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+
+  padding: 5px;
+}
+
 #submitButton {
   height: 20px;
   width: 80px;
 
   display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #d4a8a1;
+
+  border: 1px solid #d4a8a1;
+  background-color: #FFEEE6;
+  border-radius: 5px;
+  cursor: pointer;
+
 }
 
 input {
@@ -88,6 +105,8 @@ label{
   position: sticky;
   top: 0;
   z-index: 12;
+
+  /* width: 150%;  */
 
   border-bottom: 1px solid #355070;
 }

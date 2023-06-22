@@ -3,7 +3,7 @@ import "./App.css";
 
 export default function Page() {
   const [addCardInfo, setAddCardInfo] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [navIsOpen, setNavIsOpen] = useState(false);
 
   console.log("Card Info", addCardInfo);
 
@@ -14,10 +14,11 @@ export default function Page() {
     }
   }, []);
 
-  function handleClick() {
+  function handleAddCard() {
     const newCard = {
       id: Date.now(),
       companyname: "",
+      cardFacade: false,
       jobtitle: "",
       link: "",
       sectionType: "applied",
@@ -47,7 +48,7 @@ export default function Page() {
     setAddCardInfo(updatedCards);
   };
 
-  const toggleDropDown = () => setIsOpen(!isOpen);
+  const toggleDropDown = () => setNavIsOpen(!navIsOpen);
 
   const sectionCountHeader = (section) => {
     const sectionCountObj = Object.values(addCardInfo).reduce(
@@ -71,7 +72,7 @@ export default function Page() {
           <div id="dropDownContainer">
             <button id="dropDownButton" onClick={toggleDropDown}>
               <img id="dropDownImage" src="/three_midjourney.png"></img>
-              {isOpen && (
+              {navIsOpen && (
                 <div id="dropDownContent">
                   <a href="#appliedNav" className="dropDownElement">
                     Applied
@@ -102,7 +103,7 @@ export default function Page() {
             <img id="mainHeaderIcon" src="/mascot.png"></img>
             <div id="mainHeaderTitle">
               Leslie's Lovely Jobquest
-              <button id="addCard" onClick={handleClick}>
+              <button id="addCard" onClick={handleAddCard}>
                 +
               </button>
             </div>
@@ -136,7 +137,7 @@ export default function Page() {
       </div>
       <Sections
         cards={addCardInfo}
-        onSectionChange={handleCardChange}
+        onCardChange={handleCardChange}
         onDelete={deleteCard}
       />
 
@@ -147,7 +148,7 @@ export default function Page() {
   );
 }
 
-function Sections({ cards, onSectionChange, onDelete }) {
+function Sections({ cards, onCardChange, onDelete }) {
   const handleDragOver = (e) => {
     e.preventDefault();
   };
@@ -162,33 +163,40 @@ function Sections({ cards, onSectionChange, onDelete }) {
       const newSection = droppedSection.classList[1];
       const cardId = Number.parseInt(droppedItemId);
 
-      onSectionChange(cardId, { sectionType: newSection });
+      onCardChange(cardId, { sectionType: newSection });
     }
+  };
+
+  const handleSubmit = (e, cardId) => {
+    e.preventDefault();
+    const buttonId = e.target;
+    const id = cardId;
+    // const item = e.dataTransfer.getData("text/plain");
+
+    // if (e.target.id == "submitButton") {
+    //   const cardId = Number.parseInt(item);
+    //   onCardChange(cardId, { facadeCard: true });
+    // }
+
+    console.log("I'm clicked");
+    console.log("button Id", buttonId);
+    console.log("card id", id);
   };
 
   function renderCards(sectionType) {
     return cards
       .filter((card) => card.sectionType === sectionType)
-      .map((card) =>
-        card.companyname && card.jobtitle ? (
-          <FacadeCard
-            key={card.id}
-            cardData={card}
-            onDelete={onDelete}
-            cardId={card.id}
-          />
-        ) : (
-          <InfoCard
-            key={card.id}
-            cardData={card}
-            onDataChange={(updatedData) =>
-              onSectionChange(card.id, updatedData)
-            }
-            onDelete={onDelete}
-            cardId={card.id}
-          />
-        )
-      );
+      .map((card) => (
+        <InfoCard
+          key={card.id}
+          cardData={card}
+          onDataChange={(updatedData) => onCardChange(card.id, updatedData)}
+          onDelete={onDelete}
+          cardId={card.id}
+          facadeCard={card.facadeCard}
+          onSubmit={handleSubmit}
+        />
+      ));
   }
 
   return (
@@ -284,7 +292,7 @@ function FacadeCard({ cardData, onDelete, cardId }) {
   );
 }
 
-function InfoCard({ cardData, onDataChange, onDelete, cardId }) {
+function InfoCard({ cardData, onDataChange, onDelete, cardId, onSubmit }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onDataChange({ [name]: value });
@@ -368,7 +376,11 @@ function InfoCard({ cardData, onDataChange, onDelete, cardId }) {
             />
           </div>
         </form>
-        <button id="submitButton">Submit</button>
+        <div id="submitButtonContainer">
+          <button id="submitButton" onClick={(e) => onSubmit(e, cardData.id)}>
+            Submit
+          </button>
+        </div>
       </div>
     </>
   );
