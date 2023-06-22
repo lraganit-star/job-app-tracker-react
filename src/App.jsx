@@ -172,9 +172,15 @@ function Sections({ cards, onCardChange, onDelete }) {
     const buttonId = e.target;
     const id = cardId;
 
-    onCardChange(id, { cardFacade: true });
+    if (buttonId.id == "submitButton") {
+      onCardChange(id, { cardFacade: true });
+    } else {
+      onCardChange(id, { cardFacade: false });
+    }
 
     console.log("I'm clicked");
+    console.log("button id", buttonId);
+    console.log("card id", id);
   };
 
   function renderCards(sectionType) {
@@ -182,7 +188,13 @@ function Sections({ cards, onCardChange, onDelete }) {
       .filter((card) => card.sectionType === sectionType)
       .map((card) =>
         card.cardFacade ? (
-          <FacadeCard cardData={card} onDelete={onDelete} cardId={card.id} />
+          <FacadeCard
+            key={card.id}
+            cardData={card}
+            onDelete={onDelete}
+            cardId={card.id}
+            onSubmit={handleSubmit}
+          />
         ) : (
           <InfoCard
             key={card.id}
@@ -254,7 +266,7 @@ function Sections({ cards, onCardChange, onDelete }) {
   );
 }
 
-function FacadeCard({ cardData, onDelete, cardId }) {
+function FacadeCard({ cardData, onDelete, cardId, onSubmit }) {
   const handleDragStart = (e) => {
     e.dataTransfer.setData("text/plain", e.target.id);
   };
@@ -282,7 +294,7 @@ function FacadeCard({ cardData, onDelete, cardId }) {
             <div id="facadeCompanyName">{cardData.companyname}</div>
           </div>
         </div>
-        <button id="facadeEditButton">
+        <button id="facadeEditButton" onClick={(e) => onSubmit(e, cardData.id)}>
           <img id="facadeEditImage" src="/pencil_midjourney.png"></img>
         </button>
       </div>
