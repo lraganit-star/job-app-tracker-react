@@ -5,8 +5,6 @@ export default function Page() {
   const [addCardInfo, setAddCardInfo] = useState([]);
   const [navIsOpen, setNavIsOpen] = useState(false);
 
-  console.log("Card Info", addCardInfo);
-
   useEffect(() => {
     const savedCards = localStorage.getItem("savedCards");
     if (savedCards) {
@@ -18,10 +16,10 @@ export default function Page() {
     const newCard = {
       id: Date.now(),
       companyname: "",
-      cardFacade: false,
       jobtitle: "",
       link: "",
       sectionType: "applied",
+      cardFacade: false,
     };
 
     setAddCardInfo((prevCards) => {
@@ -140,7 +138,6 @@ export default function Page() {
         onCardChange={handleCardChange}
         onDelete={deleteCard}
       />
-
       <div id="footer">
         <div id="footerMessage">I hope you have a fun time job hunting!</div>
       </div>
@@ -177,10 +174,6 @@ function Sections({ cards, onCardChange, onDelete }) {
     } else {
       onCardChange(id, { cardFacade: false });
     }
-
-    console.log("I'm clicked");
-    console.log("button id", buttonId);
-    console.log("card id", id);
   };
 
   function renderCards(sectionType) {
@@ -291,12 +284,17 @@ function FacadeCard({ cardData, onDelete, cardId, onSubmit }) {
           <img id="facadeCardIcon" src="/mascot.png"></img>
           <div id="facadeCardInfo">
             <div id="facadeJobTitle">{cardData.jobtitle}</div>
-            <div id="facadeCompanyName">{cardData.companyname}</div>
           </div>
         </div>
-        <button id="facadeEditButton" onClick={(e) => onSubmit(e, cardData.id)}>
-          <img id="facadeEditImage" src="/pencil_midjourney.png"></img>
-        </button>
+        <div id="facadeFooter">
+          <div id="facadeCompanyName">{cardData.companyname}</div>
+          <button
+            id="facadeEditButton"
+            onClick={(e) => onSubmit(e, cardData.id)}
+          >
+            <img id="facadeEditImage" src="/pencil_midjourney.png"></img>
+          </button>
+        </div>
       </div>
     </>
   );
